@@ -55,11 +55,15 @@ router.post('/product-edit/:id', upload.single('imageUpload'), (req,res,next)=>{
         return product.id == req.params.id
     })
     
+    let imgPath = req.file != undefined ? req.file.originalname:req.body.imagePath;
+
     productToEdit.id = req.body.id
     productToEdit.name =  req.body.name
     productToEdit.price = req.body.price
-    productToEdit.size = req.body.size,
-    productToEdit.image_path = '/images/'+req.file.originalname
+    productToEdit.size = req.body.size
+    if(req.file != undefined){
+        productToEdit.image_path = '/images/'+req.file.originalname
+    }
 
     res.redirect('/products')
 })
